@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>unichat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="titlebar">
+    <div id="titlebar-left">
+      <div id="app-logo">💬</div>
+      <span id="app-title">UniChat</span>
+    </div>
+    <div id="titlebar-center" id="titlebar-platform-indicator"></div>
+    <div id="titlebar-controls">
+      <button class="titlebar-btn" id="refresh-btn" title="Reload current platform">↺</button>
+      <button class="titlebar-btn" id="min-btn">─</button>
+      <button class="titlebar-btn" id="max-btn">□</button>
+      <button class="titlebar-btn" id="close-btn">✕</button>
+    </div>
+  </div>
+  <div id="app-root">
+    <!-- Panel 1: Platform dock (far left) -->
+    <div id="platform-dock">
+      <div id="dock-icons">
+        <div class="platform-icon active" data-platform="whatsapp" title="WhatsApp">
+          <img src="icons/whatsapp.svg" alt="WhatsApp" />
+          <span class="unread-badge" id="badge-whatsapp" style="display:none">0</span>
+        </div>
+        <div class="platform-icon" data-platform="telegram" title="Telegram">
+          <img src="icons/telegram.svg" alt="Telegram" />
+          <span class="unread-badge" id="badge-telegram" style="display:none">0</span>
+        </div>
+        <div class="platform-icon" data-platform="instagram" title="Instagram">
+          <img src="icons/instagram.svg" alt="Instagram" />
+          <span class="unread-badge" id="badge-instagram" style="display:none">0</span>
+        </div>
+      </div>
+      <div id="dock-bottom">
+        <div class="platform-icon" id="settings-btn" title="Settings">⚙</div>
+      </div>
+    </div>
+
+    <!-- Settings Panel (Overlays Conversation list) -->
+    <div id="settings-panel" class="hidden">
+      <div id="settings-header">
+        <span>Settings</span>
+        <button id="settings-close">✕</button>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-label">Appearance</div>
+        <div class="settings-row">
+          <span>Theme</span>
+          <div class="toggle-group">
+            <button class="toggle-btn active" data-theme="dark">Dark</button>
+            <button class="toggle-btn" data-theme="light">Light</button>
+          </div>
+        </div>
+        <div class="settings-row">
+          <span>Compact sidebar</span>
+          <label class="switch">
+            <input type="checkbox" id="compact-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-label">System</div>
+        <div class="settings-row">
+          <span>Launch at startup</span>
+          <label class="switch">
+            <input type="checkbox" id="startup-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="settings-row">
+          <span>Keep in tray on close</span>
+          <label class="switch">
+            <input type="checkbox" id="tray-toggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-label">About</div>
+        <div class="settings-row muted">
+          <span>UniChat</span>
+          <span>v1.0.0</span>
+        </div>
+        <div class="settings-row muted">
+          <span>Built for Windows</span>
+          <span>by Piyush</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel 2: Conversation list (placeholder for now) -->
+    <div id="conversation-panel">
+      <div id="conv-header">
+        <span id="conv-platform-name">WhatsApp</span>
+      </div>
+      <div id="conv-list">
+        <p class="conv-placeholder">Loading conversations…</p>
+      </div>
+    </div>
+
+    <!-- Panel 3: Active chat (BrowserView will cover this area) -->
+    <div id="chat-panel">
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+      <p id="loading-text">Loading WhatsApp…</p>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+  <script>
+    document.getElementById('min-btn').addEventListener('click', () => {
+      window.electronAPI.minimize();
+    });
+
+    document.getElementById('max-btn').addEventListener('click', () => {
+      window.electronAPI.maximize();
+    });
+
+    document.getElementById('close-btn').addEventListener('click', () => {
+      window.electronAPI.close();
+    });
+  </script>
+</body>
+</html>
